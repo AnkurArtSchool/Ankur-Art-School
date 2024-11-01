@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankur Art School</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e3f2fd, #e1f5fe);
+            color: #333;
+            transition: background 0.3s;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #ffffff;
+            flex-direction: column;
+        }
+
+        .loader {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff5722;
+            animation: fadeInOut 1.5s infinite;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .banner {
+            position: relative;
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: colorChange 10s infinite alternate;
+            overflow: hidden;
+        }
+
+        @keyframes colorChange {
+            0% { background: #673ab7; }
+            25% { background: #7e57c2; }
+            50% { background: #ff8f00; }
+            75% { background: #e91e63; }
+            100% { background: #2196f3; }
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: textAnim 3s infinite;
+        }
+
+        @keyframes textAnim {
+            0% { transform: translateY(0); }
+            25% { transform: translateY(-20%); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(20%); }
+            100% { transform: translateY(0); }
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .testimonials {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #009688;
+            border-radius: 10px;
+            background-color: #e0f7fa;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: rgba(0, 121, 107, 0.5);
+            animation: wave 1.5s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10%); }
+            100% { transform: translateY(0); }
+        }
+
+        .water-bottle {
+            position: relative;
+            height: 200px;
+            width: 50px;
+            background-color: #e0f7fa;
+            border: 2px solid #009688;
+            border-radius: 10px;
+            margin: auto;
+            overflow: hidden;
+            transition: height 0.5s;
+        }
+
+        .water-level {
+            background-color: #00796b;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transition: height 0.5s;
+        }
+
+        .courses-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 20px;
+            width: calc(33% - 40px); /* For three columns */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.5s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            background-color: #f0f8ff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-card img {
+            width: 100%;
+            border-radius: 10px;
+            height: auto;
+            transition: transform 0.3s;
+        }
+
+        .course-card img:hover {
+            transform: scale(1.1);
+        }
+
+        #contact-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        input[type="text"], input[type="tel"] {
+            padding: 10px;
+            margin: 5px 0;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .notes-section {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .notes-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .notes-section p {
+            margin-bottom: 10px;
+        }
+
+        .notes-section a {
+            display: inline-block;
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .notes-section a:hover {
+            background-color: #45a049;
+        }
+
+        .video-container {
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #back-home, #back-courses {
+            background-color: #2196f3;
+            margin-top: 20px;
+        }
+
+        #back-home:hover, #back-courses:hover {
+            background-color: #1976d2;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .course-card {
+                width: calc(50% - 40px); /* For two columns on medium screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .course-card {
+                width: calc(100% - 40px); /* For one column on small screens */
+            }
+
+            .banner h1 {
+                font-size: 1.8rem;
+            }
+
+            .banner p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading" class="loading">
+        <div class="loader">Ankur Art</div>
+    </div>
+
+    <div id="home" class="hidden">
+        <header>
+            <div class="banner">
+                <h1>Welcome to Ankur Art School</h1>
+                <p>Unleash your creativity with our diverse courses.</p>
+                <button id="start-learning">Start Learning</button>
+            </div>
+            <div class="testimonials">
+                <h3>Testimonials</h3>
+                <div class="water-bottle">
+                    <div class="water-level" style="height: 50%;"></div>
+                </div>
+                <div class="wave"></div>
+                <p>"Great courses that inspire!"</p>
+                <p>"I loved learning at Ankur Art School!"</p>
+            </div>
+        </header>
+
+        <div id="contact-form">
+            <h3>Contact Us</h3>
+            <input type="text" id="name" placeholder="Your Name">
+            <input type="tel" id="number" placeholder="Your Phone Number">
+            <button id="submit-contact">Submit</button>
+        </div>
+    </div>
+
+    <div id="course-page" class="hidden">
+        <h2>Available Courses</h2>
+        <div class="courses-container"></div>
+        <button id="back-home">Back to Home</button>
+    </div>
+
+    <div id="enroll-page" class="hidden">
+        <h2>Course Video</h2>
+        <div class="video-container">
+            <iframe id="video-player" src="" allowfullscreen></iframe>
+        </div>
+        <div class="notes-section">
+            <h3>Download Course Notes</h3>
+            <p>Click the button below to download the notes.</p>
+            <a id="notes-link" href="#" target="_blank">Download Notes</a>
+        </div>
+        <button id="back-courses">Back to Courses</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hide loading screen after a delay
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('home').classList.remove('hidden');
+            }, 2000); // Show loading for 2 seconds
+
+            document.getElementById('start-learning').addEventListener('click', () => {
+                document.getElementById('home').classList.add('hidden');
+                document.getElementById('course-page').classList.remove('hidden');
+                loadCourses();
+            });
+
+            document.getElementById('back-home').addEventListener('click', () => {
+                document.getElementById('course-page').classList.add('hidden');
+                document.getElementById('home').classList.remove('hidden');
+            });
+
+            document.getElementById('back-courses').addEventListener('click', () => {
+                document.getElementById('enroll-page').classList.add('hidden');
+                document.getElementById('course-page').classList.remove('hidden');
+            });
+
+            document.getElementById('submit-contact').addEventListener('click', () => {
+                const name = document.getElementById('name').value;
+                const number = document.getElementById('number').value;
+                const message = `Name: ${name}, Phone: ${number}`;
+                const whatsappLink = `https://wa.me/6295979753?text=${encodeURIComponent(message)}`;
+                window.open(whatsappLink, '_blank');
+            });
+        });
+
+        function loadCourses() {
+            const courses = [
+                { title: 'Drawing 101', description: 'Learn the basics of drawing.', thumbnail: 'https://via.placeholder.com/300', video: 'https://www.youtube.com/embed/VIDEO_ID_1', notes: 'link_to_pdf_1.pdf' },
+                { title: 'Watercolor Techniques', description: 'Explore watercolor painting techniques.', thumbnail: 'https://via.placeholder.com/300', video: 'https://www.youtube.com/embed/VIDEO_ID_2', notes: 'link_to_pdf_2.pdf' },
+                { title: 'Digital Art', description: 'Dive into digital art creation.', thumbnail: 'https://via.placeholder.com/300', video: 'https://www.youtube.com/embed/VIDEO_ID_3', notes: 'link_to_pdf_3.pdf' },
+            ];
+
+            const courseContainer = document.querySelector('.courses-container');
+            courseContainer.innerHTML = '';
+
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.classList.add('course-card');
+                courseCard.innerHTML = `
+                    <img src="${course.thumbnail}" alt="${course.title}">
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <button class="enroll-button" data-video="${course.video}" data-notes="${course.notes}">Enroll</button>
+                `;
+                courseContainer.appendChild(courseCard);
+            });
+
+            // Add click event to enroll buttons
+            const enrollButtons = document.querySelectorAll('.enroll-button');
+            enrollButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const video = button.getAttribute('data-video');
+                    const notes = button.getAttribute('data-notes');
+                    document.getElementById('video-player').src = video;
+                    document.getElementById('notes-link').href = notes;
+                    document.getElementById('course-page').classList.add('hidden');
+                    document.getElementById('enroll-page').classList.remove('hidden');
+                    document.querySelector('.notes-section').style.display = 'block'; // Show notes section
+                });
+            });
+        }
+    </script>
+</body>
+</html>
